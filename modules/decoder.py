@@ -6,6 +6,7 @@ from utils.sublayer_connection import SublayerConnection
 
 class Decoder(nn.Module):
     def __init__(self, layer, N):
+        super(Decoder, self).__init__()
         self.layers = clones(layer, N)
         self.norm = LayerNorm(layer.size)
 
@@ -17,6 +18,7 @@ class Decoder(nn.Module):
 
 class DecoderLayer(nn.Module):
     def __init__(self, size, self_attn, src_attn, feed_forward, dropout):
+        super(DecoderLayer, self).__init__()
         self.self_attn = self_attn
         self.src_attn = src_attn
         self.feed_forward = feed_forward

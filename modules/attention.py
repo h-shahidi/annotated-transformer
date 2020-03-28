@@ -22,7 +22,7 @@ class MultiHeadedAttention(nn.Module):
         assert d_model % h == 0
         self.d_k = d_model // h # We assume d_v always equals d_k
         self.h = h
-        self.linears = clones(torch.Linear(d_model, d_model), 4)
+        self.linears = clones(nn.Linear(d_model, d_model), 4)
 
     def forward(self, query, key, value, mask=None):
         '''
