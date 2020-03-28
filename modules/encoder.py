@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-from model_utils import clones
-from model_utils import LayerNorm
-from model_utils import SublayerConnection
+from utils.utils import clones
+from utils.layer_norm import LayerNorm
+from utils.sublayer_connection import SublayerConnection
 
 class Encoder(nn.Module):
     def __init__(self, layer, N):
