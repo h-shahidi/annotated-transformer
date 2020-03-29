@@ -1,3 +1,4 @@
+import time
 from copy import deepcopy as copy
 import torch.nn as nn
 
@@ -40,6 +41,26 @@ def make_model(src_vocab,
             nn.init.xavier_uniform(p)
     return model
 
+
+def train_epoch(data_iter, model, loss_func):
+    start_time = time.time()
+    total_loss = 0
+    total_tokens = 0
+    tokens = 0
+    for i, batch in enumerate(data_iter):
+        out = model.forward(batch.src, batch.tgt, batch.src_mask, batch.tgt_mask)
+        loss = loss_func(out, batch.tgt_y, batch.ntokens)
+        total_loss += loss
+        total_tokens += batch.ntokens
+        tokens += batch.tokens
+        if i % 50 == 1:
+            elapsed = time.time() - start_time
+            print("Epoch Step: %d Loss %f Tokens per sec %f" % 
+                (i, loss / batch.ntokens, tokens / elapsed))
+            tokens = 0
+            start_time = time.time()
+    return total_loss / total_tokens
+            
 
 if __name__ == "__main__":
     make_model(100, 100)
