@@ -42,7 +42,7 @@ def make_model(src_vocab,
     return model
 
 
-def train_epoch(data_iter, model, loss_func):
+def run_epoch(data_iter, model, loss_func):
     start_time = time.time()
     total_loss = 0
     total_tokens = 0
@@ -52,7 +52,7 @@ def train_epoch(data_iter, model, loss_func):
         loss = loss_func(out, batch.tgt_y, batch.ntokens)
         total_loss += loss
         total_tokens += batch.ntokens
-        tokens += batch.tokens
+        tokens += batch.ntokens
         if i % 50 == 1:
             elapsed = time.time() - start_time
             print("Epoch Step: %d Loss %f Tokens per sec %f" % 

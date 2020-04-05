@@ -23,6 +23,7 @@ class MultiHeadedAttention(nn.Module):
         self.d_k = d_model // h # We assume d_v always equals d_k
         self.h = h
         self.linears = clones(nn.Linear(d_model, d_model), 4)
+        self.dropout = nn.Dropout(dropout)
 
     def forward(self, query, key, value, mask=None):
         '''

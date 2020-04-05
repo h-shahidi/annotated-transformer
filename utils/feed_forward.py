@@ -9,4 +9,4 @@ class PositionwiseFeedForward(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
-        return self.w_2(self.dropout(F.Relu(self.w_1(x))))
+        return self.w_2(self.dropout(F.relu(self.w_1(x))))

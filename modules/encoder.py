@@ -31,4 +31,4 @@ class EncoderLayer(nn.Module):
         mask.shape = ()
         '''
         x = self.sublayer[0](x, lambda x: self.self_attn(x, x, x, mask))
-        return self.sublayer[1](x, lambda x: self.feed_forward)
+        return self.sublayer[1](x, self.feed_forward)
