@@ -4,6 +4,7 @@ from utils.utils import clones
 from utils.layer_norm import LayerNorm
 from utils.sublayer_connection import SublayerConnection
 
+
 class Decoder(nn.Module):
     def __init__(self, layer, N):
         super(Decoder, self).__init__()
