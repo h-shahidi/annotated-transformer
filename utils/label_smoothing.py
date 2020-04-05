@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -38,7 +39,16 @@ if __name__ == "__main__":
                                 [0, 0.2, 0.7, 0.1, 0]])
     v = criterion(Variable(predict.log()), 
              Variable(torch.LongTensor([2, 1, 0])))
-
+    plt.figure()
     plt.imshow(criterion.true_dist)
-    plt.savefig("label_smoothing.png")
-   
+    plt.savefig("label_smoothing_true_dist.png")
+
+    criterion = LabelSmoothing(5, 0, 0.1)
+    def loss(x):
+        d = x + 3 * 1
+        predict = torch.FloatTensor([[0, x / d, 1 / d, 1 / d, 1 / d]])
+        return criterion(Variable(predict.log()),
+            Variable(torch.LongTensor([1]))).data
+    plt.figure()
+    plt.plot(np.arange(1, 100), [loss(x) for x in range(1, 100)])    
+    plt.savefig("label_smoothing_loss.png")
