@@ -28,10 +28,10 @@ class DecoderLayer(nn.Module):
 
     def forward(self, x, memory, src_mask, tgt_mask):
         '''
-        x.shape = ()
-        memory.shape = ()
-        src_mask.shape = ()
-        tgt_mask.shape = ()
+        x.shape = (nbatches, tgt_length, d_model)
+        memory.shape = (nbatches, src_length, d_model)
+        src_mask.shape = (nbatches, 1, src_length)
+        tgt_mask.shape = (nbatches, tgt_length, tgt_length)
         '''
         m = memory
         x = self.sublayers[0](x, lambda x: self.self_attn(x, x, x, tgt_mask))

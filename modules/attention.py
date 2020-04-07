@@ -29,8 +29,9 @@ class MultiHeadedAttention(nn.Module):
         '''
         query.shape = (nbatches, query_length, d_model)
         key.shape = (nbatches, key_length, d_model)
-        value.shape = (nbatches, value_legnth, d_model), value_legnth = key_length
-        mask.shape = (nbatches, query_length)
+        value.shape = (nbatches, value_legnth, d_model)
+        mask.shape = (nbatches, query_length, key_length)
+        value_legnth = key_length
         '''
         if mask is not None:
             # Same mask applied to all h heads.

@@ -27,8 +27,8 @@ class EncoderLayer(nn.Module):
 
     def forward(self, x, mask):
         '''
-        x.shape = ()
-        mask.shape = ()
+        x.shape = (nbatches, src_length, d_model)
+        mask.shape = (nbatches, 1, src_length)
         '''
         x = self.sublayer[0](x, lambda x: self.self_attn(x, x, x, mask))
         return self.sublayer[1](x, self.feed_forward)
