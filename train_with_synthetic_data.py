@@ -7,26 +7,8 @@ from train import run_epoch
 from utils.batch import Batch
 from utils.label_smoothing import LabelSmoothing 
 from utils.optimizer import NoamOpt
-from utils.utils import subsequent_mask
-
-
-class SimpleLossCompute:
-    def __init__(self, generator, criterion, opt):
-        self.generator = generator
-        self.criterion = criterion
-        self.opt = opt
-
-    def __call__(self, x, y, norm):
-        x = self.generator(x)
-        loss = self.criterion(
-            x.contiguous().view(-1, x.size(-1)),
-            y.contiguous().view(-1)) / norm
-        loss.backward()
-        if self.opt is not None:
-            self.opt.step()
-            self.opt.optimizer.zero_grad()
-        return loss.data * norm        
-
+from utils.utils import subsequent_mask       
+from modules.loss import SimpleLossCompute
 
 def data_gen(V, batch, nbatches):
     "Generate random data for a src-tgt copy task."
