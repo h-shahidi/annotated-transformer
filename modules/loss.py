@@ -29,7 +29,7 @@ class MultiGPULossCompute:
         self.devices = devices
         self.chunk_size = chunk_size
 
-    def __class__(self, out, targets, norm):
+    def __call__(self, out, targets, norm):
         total = 0.0
         out_scatter = nn.parallel.scatter(out, target_gpus=self.devices)
         out_grad = [[] for _ in out_scatter]

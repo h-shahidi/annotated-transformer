@@ -2,8 +2,8 @@ import numpy as np
 import torch
 from torch.autograd import Variable
 
-from train import make_model
-from train import run_epoch
+from utils.train import make_model
+from utils.train import run_epoch
 from utils.batch import Batch
 from utils.label_smoothing import LabelSmoothing 
 from utils.optimizer import NoamOpt
