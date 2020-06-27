@@ -7,7 +7,7 @@ from modules.decoder import Decoder, DecoderLayer
 from modules.encoder_decoder import EncoderDecoder
 from modules.attention import MultiHeadedAttention
 from modules.generator import Generator
-from utils.feed_forward import PositionwiseFeedForward
+from modules.feed_forward import PositionwiseFeedForward
 from utils.positional_encoding import PositionalEncoding
 from utils.embedding import Embedding
 
