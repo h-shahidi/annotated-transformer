@@ -8,7 +8,7 @@ from utils.batch import Batch
 from utils.label_smoothing import LabelSmoothing 
 from utils.optimizer import NoamOpt
 from utils.utils import subsequent_mask       
-from modules.loss import SimpleLossCompute
+from utils.loss import SimpleLossCompute
 
 def data_gen(V, batch, nbatches):
     "Generate random data for a src-tgt copy task."
