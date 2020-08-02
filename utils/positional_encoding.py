@@ -5,13 +5,14 @@ import torch.nn as nn
 from torch.autograd import Variable
 import matplotlib.pyplot as plt
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class PositionalEncoding(nn.Module):
     def __init__(self, d_model, dropout, max_len=5000):
         super(PositionalEncoding, self).__init__()
         self.dropout = nn.Dropout(dropout)
 
-        self.pe = torch.zeros(max_len, d_model)
+        self.pe = torch.zeros(max_len, d_model, device=device)
         position = torch.arange(0, max_len).unsqueeze(1)
         div_term = torch.exp(math.log(10000.0) * torch.arange(0, d_model, 2) / d_model)
         self.pe[:, 0::2] = torch.sin(position / div_term)

@@ -3,6 +3,7 @@ from torchtext import data
 from utils.utils import subsequent_mask
 from torch.autograd import Variable
 
+
 class Batch():
     "Object for holding a batch of data with mask during training."
     def __init__(self, src, tgt=None, pad=0):

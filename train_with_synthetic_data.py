@@ -8,7 +8,7 @@ from utils.batch import Batch
 from utils.label_smoothing import LabelSmoothing 
 from utils.optimizer import NoamOpt
 from utils.utils import subsequent_mask       
-from utils.loss import SimpleLossCompute
+from utils.loss import LossCompute
 
 def data_gen(V, batch, nbatches):
     "Generate random data for a src-tgt copy task."
@@ -43,10 +43,10 @@ if __name__ == "__main__":
                   torch.optim.Adam(model.parameters(), lr=0, betas=(0.9, 0.98), eps=1e-9))
     for epoch in range(10):
         model.train()
-        run_epoch(data_gen(V, 30, 20), model, SimpleLossCompute(model.generator, criterion, opt))
+        run_epoch(data_gen(V, 30, 20), model, LossCompute(model.generator, criterion, opt))
         model.eval()
         print(run_epoch(data_gen(V, 30, 5), model,
-                        SimpleLossCompute(model.generator, criterion, None)))
+                        LossCompute(model.generator, criterion, None)))
 
     model.eval()
     src = Variable(torch.LongTensor([[1,2,3,4,5,6,7,8,9,10]]))
