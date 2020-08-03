@@ -10,10 +10,15 @@ from utils.optimizer import NoamOpt
 from utils.utils import subsequent_mask       
 from utils.loss import LossCompute
 
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+
 def data_gen(V, batch, nbatches):
     "Generate random data for a src-tgt copy task."
     for i in range(nbatches):
         data = torch.from_numpy(np.random.randint(1, V, size=(batch, 10)))
+        data = data.to(device)
         data[:, 0] = 1
         src = Variable(data, requires_grad=False)
         tgt = Variable(data, requires_grad=False)
@@ -24,6 +29,7 @@ def greedy_decode(model, src, src_mask, max_len, start_symbol):
     memory = model.encode(src, src_mask)
     ys = torch.ones(1, 1).fill_(start_symbol).type_as(src.data)
     for i in range(max_len-1):
+        ys = ys.to(device)
         out = model.decode(memory, 
                            src_mask, 
                            Variable(ys), 
@@ -37,8 +43,12 @@ def greedy_decode(model, src, src_mask, max_len, start_symbol):
 
 if __name__ == "__main__":
     V = 11
+
     criterion = LabelSmoothing(vocab_size=V, padding_idx=0, smoothing=0.0)
+
     model = make_model(V, V, N=2)
+    model.to(device)
+
     opt = NoamOpt(model.src_embed[0].d_model, 1, 400, 
                   torch.optim.Adam(model.parameters(), lr=0, betas=(0.9, 0.98), eps=1e-9))
     for epoch in range(10):
@@ -49,6 +59,6 @@ if __name__ == "__main__":
                         LossCompute(model.generator, criterion, None)))
 
     model.eval()
-    src = Variable(torch.LongTensor([[1,2,3,4,5,6,7,8,9,10]]))
-    src_mask = Variable(torch.ones(1, 1, 10))
+    src = Variable(torch.LongTensor([[1,2,3,4,5,6,7,8,9,10]]).to(device))
+    src_mask = Variable(torch.ones(1, 1, 10).to(device))
     print(greedy_decode(model, src, src_mask, max_len=10, start_symbol=1))

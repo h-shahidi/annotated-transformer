@@ -11,7 +11,7 @@ from utils.loss import LossCompute
 
 N_EPOCH = 10
 BATCH_SIZE = 6000
-SAVE_PATH = "./checkpoints"
+SAVE_PATH = "./checkpoint"
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
@@ -23,7 +23,6 @@ if __name__ == "__main__":
     model.to(device)
 
     criterion = LabelSmoothing(vocab_size=len(TGT.vocab), padding_idx=pad_idx, smoothing=0.1)
-    criterion.to(device)
 
     train_iter = MyIterator(
         train, 

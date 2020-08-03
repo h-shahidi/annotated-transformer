@@ -6,7 +6,7 @@ from utils.batch import MyIterator, batch_size_fn
 from train_with_synthetic_data import greedy_decode
 
 BATCH_SIZE = 6000
-SAVE_PATH = "./checkpoints"
+SAVE_PATH = "./checkpoint"
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
